@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import './App.css'
 import ToDoList from './Components/ToDoList'
 import axios from 'axios'
-//import { ThemeContext, themes } from './Components/themeContext';
-//import ToggleDark from './components/toggleDark';
+
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkTheme, setDarkTheme] = useState(true);
   const [inputValue, setInputValue] = useState("");
   const [state, setstate] = useState([])
   const [countCompleted, setCountCompleted] = useState(0);
+
   useEffect(() => {
     axios.get('https://jsonplaceholder.typicode.com/todos')
       .then(res => {
@@ -46,12 +46,19 @@ function App() {
     state.push({ id: id, title: inputValue })
     setInputValue("")
   }
+
   return (
-    <div >
+    <div className={darkTheme ? 'dark-theme' : 'light-theme'}>
+
+      <div className=' flex justify-center  gap-96 pt-20 '>
+        <h1 className='text-2xl'>T O D O</h1>
+        <button onClick={() => setDarkTheme(prevTheme => !prevTheme)}><img src={darkTheme ? '../src/imgs/icon-moon.svg' : '../src/imgs/icon-sun.svg'} /> </button>
+      </div>
+
       <ToDoList printValue={printValue} getValue={getValue} inputVal={inputValue} choix={state}
         countComplete={checkedList} countAllTasks={state.length} countCompleted={countCompleted} />
 
-     
+
 
     </div>
   )
