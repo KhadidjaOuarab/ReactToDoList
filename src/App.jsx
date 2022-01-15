@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './App.css'
 import ToDoList from './Components/ToDoList'
 import axios from 'axios'
-
+import Form from './Components/Form';
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true);
@@ -43,21 +43,28 @@ function App() {
     e.preventDefault()
     console.log(inputValue);
     let id = state.length + 1
-    state.push({ id: id, title: inputValue })
+  //  state.push({ id: id, title: inputValue })
+    setstate([...state,{ id: id, title: inputValue }])
     setInputValue("")
   }
 
   return (
     <div className={darkTheme ? 'dark-theme' : 'light-theme'}>
 
-      <div className=' flex justify-center  gap-96 pt-20 '>
-        <h1 className='text-2xl'>T O D O</h1>
+      <div className=' flex justify-center   '>
+        <h1 className='text-2xl font-bold'>T O D O</h1>
         <button onClick={() => setDarkTheme(prevTheme => !prevTheme)}><img src={darkTheme ? '../src/imgs/icon-moon.svg' : '../src/imgs/icon-sun.svg'} /> </button>
       </div>
 
-      <ToDoList printValue={printValue} getValue={getValue} inputVal={inputValue} choix={state}
-        countComplete={checkedList} countAllTasks={state.length} countCompleted={countCompleted} />
+      < Form printValue={printValue} getValue={getValue} inputVal={inputValue} />
 
+      <ToDoList state={state} countComplete={checkedList} />
+
+    
+
+      <div className='ml-96 gap-5 flex flex-row'><p className='w-44 h-3'>All Tasks     </p><input className='text-black' value={state.length} /></div>
+
+      <div className='ml-96 gap-5 flex flex-row '><p className='w-44 h-3'>Completed Tasks</p><input className='text-black' value={countCompleted} /></div>
 
 
     </div>
