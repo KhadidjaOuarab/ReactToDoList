@@ -1,28 +1,35 @@
 import React from 'react'
-import { Add_Todo } from './src/action'
+import { Add_Todo,Remove_Todo } from './src/action'
+
+
 const initialState = {
-    number: 0
+    todos: []
 };
 
 
-
 function reducer(state = initialState, action) {
+    console.log(action.type);
 
     switch (action.type) {
 
-        case ADD_ONE:
+        case Add_Todo:
+            console.log(action.todosProps);
             return {
-                number: state.number + 1
+                todos: [...state.todos, action.todosProps],
+
             };
 
-        case MINUS_ONE:
+        case Remove_Todo:
+            console.log(action.id);
             return {
-                number: state.number - 1
+                todos: state.todos.filter( (el) => el.id !== action.id) ,
+
             };
 
         default:
             return state;
     }
+
 }
 
 
